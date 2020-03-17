@@ -43,13 +43,19 @@ const reducer = combineReducers({
 
 const store = createStore(reducer);
 
+const createAddAction = amount => ({
+  type: "ADD",
+  payload: { amount }
+});
+
 const unsubscribe = store.subscribe(() => {
   const state = store.getState();
   console.log(state);
 });
 
-store.dispatch({ type: "ADD", payload: { amount: 2 }, meta: {} });
-store.dispatch({ type: "ADD", payload: { amount: 2 }, meta: {} });
+const dispatchAdd = bindActionCreators(createAddAction, store.dispatch); // Same as store.dispatch(createAddAction(2));
+dispatchAdd(10);
+
 store.dispatch({
   type: "ERROR",
   payload: { message: "This is an error" },
@@ -57,5 +63,3 @@ store.dispatch({
 });
 
 unsubscribe();
-
-store.dispatch({ type: "ADD", payload: { amount: 2 }, meta: {} });
