@@ -17,3 +17,9 @@ const makeLouderAndBoldAndRepeatThreeTimes = compose(
 );
 
 console.log(makeLouderAndBoldAndRepeatThreeTimes("simos"));
+
+const reducer = (state = { value: 1 }, action) => state;
+
+const store = createStore(reducer);
+
+console.log(store.getState());
