@@ -30,8 +30,14 @@ const reducer = (state = { value: 1 }, action) => {
 
 const store = createStore(reducer);
 
-console.log(store.getState());
+const unsubscribe = store.subscribe(() => {
+  const state = store.getState();
+  console.log(state);
+});
 
 store.dispatch({ type: "ADD", payload: { amount: 2 }, meta: {} });
+store.dispatch({ type: "ADD", payload: { amount: 2 }, meta: {} });
 
-console.log(store.getState());
+unsubscribe();
+
+store.dispatch({ type: "ADD", payload: { amount: 2 }, meta: {} });
