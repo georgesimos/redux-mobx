@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import { createStore } from 'redux';
+import { createStore, bindActionCreators } from 'redux';
 import { connect, Provider } from 'react-redux';
 
 import './styles.scss';
@@ -12,13 +12,13 @@ const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
 const RESET = 'RESET';
 
-const incrementValue = () => ({
+const increment = () => ({
   type: INCREMENT,
 });
-const decrementValue = () => ({
+const decrement = () => ({
   type: DECREMENT,
 });
-const resetValue = () => ({
+const reset = () => ({
   type: RESET,
 });
 
@@ -61,17 +61,14 @@ class Counter extends Component {
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => {
-  return {
-    increment() {
-      dispatch(incrementValue());
+  return bindActionCreators(
+    {
+      increment,
+      decrement,
+      reset,
     },
-    decrement() {
-      dispatch(decrementValue());
-    },
-    reset() {
-      dispatch(resetValue());
-    },
-  };
+    dispatch,
+  );
 };
 
 const CounterContainer = connect(mapStateToProps, mapDispatchToProps)(Counter);
