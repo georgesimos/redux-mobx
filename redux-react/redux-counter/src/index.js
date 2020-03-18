@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import { createStore, bindActionCreators } from 'redux';
+import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 
 import './styles.scss';
@@ -60,15 +60,10 @@ class Counter extends Component {
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      increment,
-      decrement,
-      reset,
-    },
-    dispatch,
-  );
+const mapDispatchToProps = {
+  increment,
+  decrement,
+  reset,
 };
 
 const CounterContainer = connect(mapStateToProps, mapDispatchToProps)(Counter);
