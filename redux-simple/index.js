@@ -41,20 +41,30 @@ const reducer = combineReducers({
   error: errorReducer
 });
 
-const store = createStore(reducer);
+const logger = ({ getState }) => {
+  return next => action => {
+    console.log("MIDDLEWARE", getState(), action);
+
+    const value = next(action);
+    console.log("state after dispatch", getState());
+    return value;
+  };
+};
+
+const store = createStore(reducer, applyMiddleware(logger));
 
 const createAddAction = amount => ({
   type: "ADD",
   payload: { amount }
 });
 
+const dispatchAdd = bindActionCreators(createAddAction, store.dispatch); // Same as store.dispatch(createAddAction(2));
+dispatchAdd(10);
+
 const unsubscribe = store.subscribe(() => {
   const state = store.getState();
   console.log(state);
 });
-
-const dispatchAdd = bindActionCreators(createAddAction, store.dispatch); // Same as store.dispatch(createAddAction(2));
-dispatchAdd(10);
 
 store.dispatch({
   type: "ERROR",
